@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AngleSharp;
 
 
 namespace ConsoleApp1
@@ -20,8 +21,27 @@ namespace ConsoleApp1
                 string response = responseMessage.Content.ReadAsStringAsync().Result;//取得內容
                 
                 Console.WriteLine(response);
-            }
 
+                // 使用AngleSharp時的前置設定
+                var config = Configuration.Default;
+                var context = BrowsingContext.New(config);
+
+                //將我們用httpclient拿到的資料放入res.Content中())
+                var document = await context.OpenAsync(res => res.Content(response));
+
+                //QuerySelector("head")找出<head></head>元素
+                var head = document.QuerySelector("head");
+                Console.WriteLine(head.ToHtml());
+
+                //QuerySelector(".entry-content")找出class="entry-content"的所有元素的文字內容
+                var h1s = document.QuerySelectorAll(".container");
+                foreach(var h1 in h1s)
+                {
+                    Console.WriteLine(h1.TextContent);
+                }
+               
+            }
+            
             Console.ReadKey();
         }
     }
