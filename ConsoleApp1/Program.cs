@@ -33,13 +33,15 @@ namespace ConsoleApp1
                 var head = document.QuerySelector("head");
                 Console.WriteLine(head.ToHtml());
 
-                //QuerySelector(".entry-content")找出class="entry-content"的所有元素的文字內容
-                var h1s = document.QuerySelectorAll(".container");
-                foreach(var h1 in h1s)
+                //QuerySelector(".entry-content")找出class="entry-content"的所有元素
+                var contents = document.QuerySelectorAll(".entry-content");
+
+                foreach (var c in contents)
                 {
-                    Console.WriteLine(h1.TextContent);
+                    //取得每個元素的TextContent
+                    Console.WriteLine(c.TextContent);
                 }
-               
+
             }
             
             Console.ReadKey();
